@@ -120,7 +120,7 @@ This application analyzes speech patterns from audio recordings to identify pote
 
 ## License
 
-This project is open source and available under the MIT License.
+This project is made by Srijit Sardar of B.Tech ECE dept. of BIT MESRA.
 
 ## Disclaimer
 
