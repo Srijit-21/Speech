@@ -9,6 +9,3 @@ services:
     plan: free
     branch: main
     autoDeploy: true
-    buildFilter:
-      paths:
-        - .
