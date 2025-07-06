@@ -28,7 +28,7 @@ app.config['ALLOWED_EXTENSIONS'] = {'wav'}
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16MB max upload
 app.config['STATIC_FOLDER'] = 'static'
 
-# Create uploads directory if it doesn't exist
+# Create uploads directory if it doesn't exist 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 # Custom JSON encoder to handle NumPy types
@@ -1020,27 +1020,6 @@ def test_page():
 def serve_static(filename):
     return send_from_directory(app.config['STATIC_FOLDER'], filename)
 
-# Add this function for Vercel serverless deployment
-def api(request):
-    path = request.path
-    if path == '/':
-        return index()
-    elif path == '/analyze':
-        return analyze_speech()
-    elif path.startswith('/results/'):
-        result_id = path.split('/')[-1]
-        return get_results(result_id)
-    elif path == '/test':
-        return test_endpoint()
-    elif path == '/test-page':
-        return test_page()
-    elif path.startswith('/static/'):
-        filename = path.replace('/static/', '', 1)
-        return serve_static(filename)
-    else:
-        return "Not Found", 404
-
-# This section will run when executing the script directly but not when imported as a module
 if __name__ == '__main__':
     # Increase logging level to see more details
     logging.basicConfig(level=logging.DEBUG)
@@ -1059,7 +1038,3 @@ if __name__ == '__main__':
         logger.warning(f"Could not set uploads directory permissions: {str(e)}")
     
     app.run(debug=True) 
-
-# Handler for Vercel serverless deployment
-def handler(request):
-    return app 
