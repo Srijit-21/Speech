@@ -16,7 +16,10 @@ import re
 import logging
 
 # Download NLTK data
-nltk.download('punkt')
+try:
+    nltk.download('punkt', quiet=True)
+except Exception as e:
+    print(f"Warning: Could not download NLTK data: {e}")
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -1021,20 +1024,10 @@ def serve_static(filename):
     return send_from_directory(app.config['STATIC_FOLDER'], filename)
 
 if __name__ == '__main__':
-    # Increase logging level to see more details
-    logging.basicConfig(level=logging.DEBUG)
-    logger = logging.getLogger(__name__)
-    
     # Create uploads directory if it doesn't exist
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
         logger.info(f"Created uploads directory: {app.config['UPLOAD_FOLDER']}")
     
-    # Make uploads directory writable
-    try:
-        os.chmod(app.config['UPLOAD_FOLDER'], 0o777)
-        logger.info("Set uploads directory permissions to writable")
-    except Exception as e:
-        logger.warning(f"Could not set uploads directory permissions: {str(e)}")
-    
-    app.run(debug=True) 
+    # For local development only
+    app.run(debug=True)
